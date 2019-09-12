@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "..\\src\\App.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n  \n  let fqdn = window.location.hostname.split(\".\").map(w => w.charAt(0) + w.substring(1)).join(\".\");\n\n  const link_to_data = \"https://data.3672518.xyz/sitedata/\" + fqdn + \"/data/curatedlist.json\";\n\n  const url = link_to_data;\n  const title = \"A List\";\n\n  let data = [];\n\n  \n  async function get_data_from_url() {\n    const response = await fetch(url);\n    const json = await response.json();\n    data = json;\n\n    if (response.ok) {\n      return data;\n    } else {\n      throw new Error(text);\n    }\n  }\n\n  function handleClick2() {\n    promise2 = get_data_from_url();\n  }\n\n  let promise2 = get_data_from_url();\n</script>\n\n<style>\n  h1 {\n    color: purple;\n  }\n  a {\n    padding: 0.5em;\n  }\n\n  .loading {\n    opacity: 0;\n    animation: 0.1s 0.8s forwards fade-in;\n  }\n\n  @keyframes fade-in {\n    from {\n      opacity: 0;\n    }\n    to {\n      opacity: 1;\n    }\n  }\n</style>\n\n<h1>Welcome to {fqdn}!</h1>\n\n<button on:click={handleClick2}>Click to get the latest List</button>\n<p>Links will open in new window/tab.</p>\n\n{#await promise2}\n  <p class=\"loading\">\n    please wait for 1 minute after clicking the button, please wait ...getting latest list...\n  </p>\n{:then data}\n  <ol>\n    {#each data as link}\n      <li>\n        <a href={link.url} target=\"_blank\">{link.title}</a>\n      </li>\n    {/each}\n  </ol>\n{:catch error}\n  <p style=\"color: red\">{error.message}</p>\n{/await}\n"
+  ],
+  "names": [],
+  "mappings": "AAgCE,EAAE,cAAC,CAAC,AACF,KAAK,CAAE,MAAM,AACf,CAAC,AACD,CAAC,cAAC,CAAC,AACD,OAAO,CAAE,KAAK,AAChB,CAAC,AAED,QAAQ,cAAC,CAAC,AACR,OAAO,CAAE,CAAC,CACV,SAAS,CAAE,IAAI,CAAC,IAAI,CAAC,QAAQ,CAAC,qBAChC,CAAC,AAED,WAAW,qBAAQ,CAAC,AAClB,IAAI,AAAC,CAAC,AACJ,OAAO,CAAE,CAAC,AACZ,CAAC,AACD,EAAE,AAAC,CAAC,AACF,OAAO,CAAE,CAAC,AACZ,CAAC,AACH,CAAC"
+}
